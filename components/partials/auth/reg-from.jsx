@@ -11,17 +11,17 @@ import { handleRegister } from "./store";
 
 const schema = yup
   .object({
-    name: yup.string().required("Name is Required"),
-    email: yup.string().email("Invalid email").required("Email is Required"),
+    name: yup.string().required("Nome é obrigatório"),
+    email: yup.string().email("Email inválido").required("E-mail é obrigatório"),
     password: yup
       .string()
-      .min(6, "Password must be at least 8 characters")
-      .max(20, "Password shouldn't be more than 20 characters")
-      .required("Please enter password"),
+      .min(6, "A senha não pode ter menos de 6 digitos")
+      .max(20, "A senha não pode ter mais de 20 caracteres")
+      .required("Por favor informe a senha"),
     // confirm password
     confirmpassword: yup
       .string()
-      .oneOf([yup.ref("password"), null], "Passwords must match"),
+      .oneOf([yup.ref("password"), null], "As senhas não batem"),
   })
   .required();
 
@@ -50,9 +50,9 @@ const RegForm = () => {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 ">
       <Textinput
         name="name"
-        label="name"
+        label="Nome"
         type="text"
-        placeholder=" Enter your name"
+        placeholder="Insira seu Nome"
         register={register}
         error={errors.name}
       />{" "}
@@ -60,7 +60,7 @@ const RegForm = () => {
         name="email"
         label="email"
         type="email"
-        placeholder=" Enter your email"
+        placeholder="Insira seu E-mail"
         register={register}
         error={errors.email}
       />
@@ -68,17 +68,17 @@ const RegForm = () => {
         name="password"
         label="passwrod"
         type="password"
-        placeholder=" Enter your password"
+        placeholder="Insira sua senha"
         register={register}
         error={errors.password}
       />
       <Checkbox
-        label="You accept our Terms and Conditions and Privacy Policy"
+        label="Voce aceitar os termos e politicas de privacidade"
         value={checked}
         onChange={() => setChecked(!checked)}
       />
       <button className="btn btn-dark block w-full text-center">
-        Create an account
+        Criar sua conta
       </button>
     </form>
   );

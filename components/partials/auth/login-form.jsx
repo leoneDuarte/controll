@@ -38,7 +38,7 @@ const LoginForm = () => {
         router.push("/analytics");
       }, 1500);
     } else {
-      toast.error("Invalid credentials", {
+      toast.error("Credencias inválidas!", {
         position: "top-right",
         autoClose: 1500,
         hideProgressBar: false,
@@ -65,7 +65,7 @@ const LoginForm = () => {
       />
       <Textinput
         name="password"
-        label="passwrod"
+        label="Senha"
         type="password"
         defaultValue="dashcode"
         register={register}
@@ -75,17 +75,17 @@ const LoginForm = () => {
         <Checkbox
           value={checked}
           onChange={() => setChecked(!checked)}
-          label="Keep me signed in"
+          label="Me mantenha logado"
         />
         <Link
           href="/forgot-password"
           className="text-sm text-slate-800 dark:text-slate-400 leading-6 font-medium"
         >
-          Forgot Password?{" "}
+          Esqueceu sua senha?{" "}
         </Link>
       </div>
 
-      <button className="btn btn-dark block w-full text-center">Sign in</button>
+      <button className="btn btn-dark block w-full text-center">Logar</button>
     </form>
   );
 };
