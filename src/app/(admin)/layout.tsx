@@ -33,12 +33,12 @@ export default function EmpresaLayout({ children }: { children: ReactNode }) {
         )}
       >
         <div className="p-6 border-b">
-          <h1 className="text-xl font-bold">Painel da Empresa</h1>
+          <h1 className="text-xl font-bold">Faytre</h1>
         </div>
 
         <nav className="flex-1 p-4 space-y-2">
-          <SidebarLink icon={<Home size={18} />} label="Dashboard" href="/empresa" />
-          <SidebarLink icon={<Building2 size={18} />} label="Dados da Empresa" href="/empresa/dados" />
+          <SidebarLink icon={<Home size={18} />} label="Dashboard" href="/dashboard" />
+          <SidebarLink icon={<Building2 size={18} />} label="Dados da Empresa" href="/empresa" />
           <SidebarLink icon={<Users size={18} />} label="Setores" href="/empresa/setores" />
           <SidebarLink icon={<Settings size={18} />} label="Configurações" href="/empresa/config" />
         </nav>
@@ -66,7 +66,7 @@ export default function EmpresaLayout({ children }: { children: ReactNode }) {
 
         {/* FOOTER */}
         <footer className="h-14 border-t bg-white flex items-center justify-center text-sm text-muted-foreground">
-          Desenvolvido com ❤️ por você mesmo
+          Desenvolvido com ❤️ por faytre
         </footer>
       </div>
     </div>

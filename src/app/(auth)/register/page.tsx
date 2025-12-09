@@ -90,6 +90,23 @@ export default function Register() {
   );
 }
 
+async function createUser() {
+  const res = await fetch('/api/user', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      name: 'Leone',
+      email: 'falarcomleone@gmail.com',
+      password: 'Leone'
+    })
+  });
+
+  const data = await res.json();
+  return data;
+}
+
 // Mock simples — troque pela sua API real depois
 async function fakeRegister(nome: string, email: string, senha: string) {
   await new Promise((r) => setTimeout(r, 500));
