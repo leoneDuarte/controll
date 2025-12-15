@@ -33,7 +33,7 @@ export default function EmpresaLayout({ children }: { children: ReactNode }) {
                 )}
             >
                 <div className="p-6 border-b">
-                    <h1 className="text-xl font-bold">Tecnologia e desenvolvimento</h1>
+                    <h1 className="text-xl font-bold">Tecnologia e desenvolvimento.</h1>
                 </div>
 
                 <nav className="flex-1 p-4 space-y-2">
