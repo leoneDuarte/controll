@@ -31,7 +31,7 @@ export default function EmpresaLayout({ children }: { children: ReactNode }) {
       {/* --- MAIN AREA --- */}
       <div className="flex-1 flex flex-col">
         {/* HEADER */}
-        <header className="h-16 bg-white border-b px-6 flex items-center justify-between shadow-sm">
+        <header className="h-16 bg-white border-b flex items-center justify-between shadow-sm">
           <button className="lg:hidden" onClick={() => setOpen(true)}>
             <Menu />
           </button>
@@ -42,7 +42,7 @@ export default function EmpresaLayout({ children }: { children: ReactNode }) {
         </header>
 
         {/* CONTENT */}
-        <main className="flex-1 p-4 lg:p-8">{children}</main>
+        <main className="flex-1 p-2">{children}</main>
 
         {/* FOOTER */}
         <footer className="h-14 border-t bg-white flex items-center justify-center text-sm text-muted-foreground">
