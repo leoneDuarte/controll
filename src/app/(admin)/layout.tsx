@@ -26,27 +26,7 @@ export default function EmpresaLayout({ children }: { children: ReactNode }) {
         onClick={() => setOpen(false)}
       />
 
-      <aside
-        className={cn(
-          "fixed z-50 lg:static top-0 left-0 h-full w-64 bg-white border-r shadow-sm flex flex-col transition-transform",
-          open ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
-        )}
-      >
-        <div className="p-6 border-b">
-          <h1 className="text-xl font-bold">Faytre</h1>
-        </div>
 
-        <nav className="flex-1 p-4 space-y-2">
-          <SidebarLink icon={<Home size={18} />} label="Dashboard" href="/dashboard" />
-          <SidebarLink icon={<Building2 size={18} />} label="Dados da Empresa" href="/empresa" />
-          <SidebarLink icon={<Users size={18} />} label="Setores" href="/empresa/setores" />
-          <SidebarLink icon={<Settings size={18} />} label="Configurações" href="/empresa/config" />
-        </nav>
-
-        <footer className="p-4 border-t text-xs text-muted-foreground">
-          © {new Date().getFullYear()} — Seu Sistema
-        </footer>
-      </aside>
 
       {/* --- MAIN AREA --- */}
       <div className="flex-1 flex flex-col">

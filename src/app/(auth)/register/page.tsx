@@ -17,7 +17,7 @@ export default function Register() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    const user = await fakeRegister(nome, email, senha);
+    const user = await registerUser(nome, email, senha);
 
     if (user.ok) {
       router.push("/empresa"); // volta pro login depois de registrar
@@ -116,4 +116,33 @@ async function fakeRegister(nome: string, email: string, senha: string) {
   }
 
   return { ok: true };
+}
+
+export async function registerUser(name: string, email: string, password: string): Promise<any> {
+  try {
+    const response = await fetch("/api/user", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name, email, password }),
+    });
+
+    const data = await response.json();
+debugger
+    return {
+      ok: true,
+      user: {
+        id: data.user.id,
+        nome: data.user.nome,
+        email: data.user.email,
+      },
+      token: data.token,
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      message: "Erro ao conectar com o servidor",
+    };
+  }
 }

@@ -1,178 +1,90 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import {
-  Tabs,
-  TabsList,
-  TabsTrigger,
-  TabsContent,
-} from "@/components/ui/tabs";
+import Link from "next/link";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Cpu, DollarSign, Users, TrendingUp, Headset, Building2 } from "lucide-react";
 
-export interface Setor {
-  id: string;
-  nome: string;
-}
+const setoresMock = [
+  {
+    id: "tecnologia",
+    nome: "Tecnologia",
+    descricao: "Infraestrutura, sistemas e inovação",
+    rota: "/setores/tecnologia",
+    icon: Cpu,
+  },
+  {
+    id: "financeiro",
+    nome: "Financeiro",
+    descricao: "Controle financeiro e faturamento",
+    rota: "/setores/financeiro",
+    icon: DollarSign,
+  },
+  {
+    id: "rh",
+    nome: "Recursos Humanos",
+    descricao: "Pessoas, cultura e processos",
+    rota: "/setores/rh",
+    icon: Users,
+  },
+  {
+    id: "vendas",
+    nome: "Vendas",
+    descricao: "Comercial e crescimento",
+    rota: "/setores/vendas",
+    icon: TrendingUp,
+  },
+  {
+    id: "suporte",
+    nome: "Suporte",
+    descricao: "Atendimento ao cliente",
+    rota: "/setores/suporte",
+    icon: Headset,
+  },
+  {
+    id: "administrativo",
+    nome: "Administrativo",
+    descricao: "Gestão interna e operações",
+    rota: "/setores/administrativo",
+    icon: Building2,
+  },
+];
 
-export interface Funcionario {
-  id: string;
-  nome: string;
-  cargo: string;
-}
-
-export interface Empresa {
-  id: string;
-  nome: string;
-  cnpj: string;
-  descricao?: string;
-  setores: Setor[];
-  funcionarios: Funcionario[];
-}
-
-export default function EmpresaPanel({ empresa }: { empresa?: Empresa }) {
-  // GARANTE QUE SEMPRE TEM UM OBJETO VÁLIDO
-  const safeEmpresa: Empresa = empresa || {
-    id: "",
-    nome: "",
-    cnpj: "",
-    descricao: "",
-    setores: [],
-    funcionarios: [],
-  };
-
-  const [dados, setDados] = useState({
-    nome: safeEmpresa.nome,
-    cnpj: safeEmpresa.cnpj,
-    descricao: safeEmpresa.descricao || "",
-  });
-
-  // SE EMPRESA CHEGAR DEPOIS, SINCRONIZA
-  useEffect(() => {
-    if (empresa) {
-      setDados({
-        nome: empresa.nome,
-        cnpj: empresa.cnpj,
-        descricao: empresa.descricao || "",
-      });
-    }
-  }, [empresa]);
-
-  // ENQUANTO NÃO CHEGA EMPRESA REAL, RENDER SEGURO
-  if (!empresa) {
-    return (
-      <Card className="w-full p-6">
-        <p className="text-center text-muted-foreground text-sm">
-          Carregando dados da empresa...
-        </p>
-      </Card>
-    );
-  }
-
+export default function SetoresCardsMock() {
   return (
-    <Card className="w-full">
-      <CardHeader>
-        <CardTitle>{dados.nome || "Empresa"}</CardTitle>
-      </CardHeader>
+    <div className="p-6">
+      <h1 className="text-2xl font-semibold mb-6">Setores da Empresa</h1>
 
-      <CardContent>
-        <Tabs defaultValue="dados" className="w-full">
-          <TabsList>
-            <TabsTrigger value="dados">Dados básicos</TabsTrigger>
-            <TabsTrigger value="setores">Setores</TabsTrigger>
-            <TabsTrigger value="funcionarios">Funcionários</TabsTrigger>
-          </TabsList>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {setoresMock.map((setor) => {
+          const Icon = setor.icon;
 
-          {/* -------- DADOS -------- */}
-          <TabsContent value="dados" className="mt-4 space-y-4">
-            <div className="space-y-2">
-              <label>Nome</label>
-              <Input
-                value={dados.nome}
-                onChange={(e) =>
-                  setDados((d) => ({ ...d, nome: e.target.value }))
-                }
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label>CNPJ</label>
-              <Input
-                value={dados.cnpj}
-                onChange={(e) =>
-                  setDados((d) => ({ ...d, cnpj: e.target.value }))
-                }
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label>Descrição</label>
-              <Input
-                value={dados.descricao}
-                onChange={(e) =>
-                  setDados((d) => ({ ...d, descricao: e.target.value }))
-                }
-              />
-            </div>
-
-            <Button>Salvar</Button>
-          </TabsContent>
-
-          {/* -------- SETORES -------- */}
-          <TabsContent value="setores" className="mt-4">
-            {safeEmpresa.setores.length === 0 && (
-              <p className="text-sm text-muted-foreground">
-                Nenhum setor cadastrado.
-              </p>
-            )}
-
-            <div className="space-y-2">
-              {safeEmpresa.setores.map((s) => (
-                <div
-                  key={s.id}
-                  className="flex items-center justify-between border p-3 rounded-lg"
-                >
-                  <span>{s.nome}</span>
-                  <Badge variant="secondary">{s.id}</Badge>
-                </div>
-              ))}
-            </div>
-
-            <Button className="mt-4">Adicionar setor</Button>
-          </TabsContent>
-
-          {/* -------- FUNCIONÁRIOS -------- */}
-          <TabsContent value="funcionarios" className="mt-4">
-            {safeEmpresa.funcionarios.length === 0 && (
-              <p className="text-sm text-muted-foreground">
-                Nenhum funcionário cadastrado.
-              </p>
-            )}
-
-            <div className="space-y-2">
-              {safeEmpresa.funcionarios.map((f) => (
-                <div
-                  key={f.id}
-                  className="flex items-center justify-between border p-3 rounded-lg"
-                >
-                  <div>
-                    <p className="font-medium">{f.nome}</p>
-                    <p className="text-sm text-muted-foreground">
-                      {f.cargo}
-                    </p>
+          return (
+            <Link key={setor.id} href={setor.rota} className="group">
+              <Card className="h-full rounded-2xl transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+                <CardContent className="p-6 flex items-start gap-4">
+                  <div className="h-14 w-14 rounded-2xl bg-primary/10 flex items-center justify-center">
+                    <Icon className="h-7 w-7 text-primary" />
                   </div>
 
-                  <Badge>{f.id}</Badge>
-                </div>
-              ))}
-            </div>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between">
+                      <h2 className="text-lg font-semibold group-hover:text-primary transition-colors">
+                        {setor.nome}
+                      </h2>
+                      <Badge variant="secondary">{setor.id}</Badge>
+                    </div>
 
-            <Button className="mt-4">Adicionar funcionário</Button>
-          </TabsContent>
-        </Tabs>
-      </CardContent>
-    </Card>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      {setor.descricao}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+          );
+        })}
+      </div>
+    </div>
   );
 }

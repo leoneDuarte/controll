@@ -15,10 +15,10 @@ export default function Login() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    const auth = await fakeAuth(email, senha);
-
+    const auth = await authUser(email, senha);
+debugger
     if (auth.ok) {
-      router.push("/dashboard");
+      router.push("/empresa");
     } else {
       alert("Login inválido");
     }
@@ -100,4 +100,50 @@ async function fakeAuth(email: string, senha: string) {
   }
 
   return { ok: false };
+}
+
+type AuthResponse =
+  | {
+      ok: true;
+      user: {
+        id: number;
+        nome: string;
+        email: string;
+      };
+      token: string;
+    }
+  | {
+      ok: false;
+      message?: string;
+    };
+
+
+
+export async function authUser(email: string, password: string): Promise<AuthResponse> {
+  try {
+    const response = await fetch("/api/auth", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await response.json();
+
+    return {
+      ok: true,
+      user: {
+        id: data.user.id,
+        nome: data.user.nome,
+        email: data.user.email,
+      },
+      token: data.token,
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      message: "Erro ao conectar com o servidor",
+    };
+  }
 }
