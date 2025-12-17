@@ -23,6 +23,14 @@ const githubMock: GitHubFeature[] = [
   },
   {
     id: 2,
+    titulo: 'Produtividade',
+    descricao: 'Produtividade setor no github',
+    icon: SquareKanban,
+    cor: 'from-cyan-500 to-blue-600',
+    rota: '/setores/tecnologia/desenvolvimento/github/produtividade',
+  },
+  {
+    id: 3,
     titulo: 'Repositórios',
     descricao: 'Visualizar e gerenciar repositórios conectados',
     icon: Github,
@@ -30,7 +38,7 @@ const githubMock: GitHubFeature[] = [
     rota: '/integracoes/github/repositorios',
   },
   {
-    id: 3,
+    id: 4,
     titulo: 'Branches',
     descricao: 'Acompanhar branches e estratégias de versionamento',
     icon: GitBranch,
@@ -38,7 +46,7 @@ const githubMock: GitHubFeature[] = [
     rota: '/integracoes/github/branches',
   },
   {
-    id: 4,
+    id: 5,
     titulo: 'Pull Requests',
     descricao: 'Revisões, status e histórico de PRs',
     icon: GitPullRequest,
@@ -46,7 +54,7 @@ const githubMock: GitHubFeature[] = [
     rota: '/integracoes/github/pull-requests',
   },
   {
-    id: 5,
+    id: 6,
     titulo: 'Colaboradores',
     descricao: 'Acessos, permissões e contribuições',
     icon: Users,
