@@ -1,102 +1,81 @@
-"use client";
+'use client';
 
-import {
-  LineChart,
-  Line,
-  BarChart,
-  Bar,
-  PieChart,
-  Pie,
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-  CartesianGrid,
-  ResponsiveContainer,
-} from "recharts";
+import Link from 'next/link';
 
-const lineData = [
-  { name: "Jan", value: 400 },
-  { name: "Fev", value: 300 },
-  { name: "Mar", value: 500 },
-  { name: "Abr", value: 200 },
-  { name: "Mai", value: 700 },
+type Setor = {
+  id: number;
+  nome: string;
+  descricao: string;
+  colaboradores: number;
+  cor: string;
+  rota: string;
+};
+
+const setoresMock: Setor[] = [
+  {
+    id: 1,
+    nome: 'Desenvolvimento',
+    descricao: 'Produtos, sistemas e integrações',
+    colaboradores: 12,
+    cor: 'from-indigo-500 to-purple-600',
+    rota: '/setores/tecnologia/desenvolvimento',
+  },
+  {
+    id: 2,
+    nome: 'Infraestrutura',
+    descricao: 'Cloud, redes e disponibilidade',
+    colaboradores: 5,
+    cor: 'from-cyan-500 to-blue-600',
+    rota: '/setores/tecnologia/infraestrutura',
+  },
+  {
+    id: 3,
+    nome: 'Segurança',
+    descricao: 'Compliance, auditoria e proteção',
+    colaboradores: 3,
+    cor: 'from-rose-500 to-red-600',
+    rota: '/setores/tecnologia/seguranca',
+  },
+  {
+    id: 4,
+    nome: 'Suporte',
+    descricao: 'Incidentes e atendimento interno',
+    colaboradores: 7,
+    cor: 'from-emerald-500 to-green-600',
+    rota: '/setores/tecnologia/suporte',
+  },
 ];
 
-const barData = [
-  { name: "Produto A", value: 240 },
-  { name: "Produto B", value: 456 },
-  { name: "Produto C", value: 139 },
-];
-
-const pieData = [
-  { name: "Ativo", value: 65 },
-  { name: "Inativo", value: 35 },
-];
-
-const areaData = [
-  { name: "Seg", value: 120 },
-  { name: "Ter", value: 210 },
-  { name: "Qua", value: 150 },
-  { name: "Qui", value: 278 },
-  { name: "Sex", value: 189 },
-];
-
-export default function DashboardGraficos() {
+export default function TecnologiaHome() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
-      <div className="h-80 rounded-2xl shadow p-4">
-        <h2 className="text-lg font-semibold mb-2">Linha</h2>
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={lineData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line type="monotone" dataKey="value" strokeWidth={2} />
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
+    <div className="p-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
+        {setoresMock.map((setor) => (
+          <Link
+            key={setor.id}
+            href={setor.rota}
+            className="group relative overflow-hidden rounded-2xl bg-zinc-900 p-6 text-white shadow-lg transition hover:-translate-y-1 hover:shadow-2xl"
+          >
+            <div
+              className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition bg-gradient-to-br ${setor.cor}`}
+            />
 
-      <div className="h-80 rounded-2xl shadow p-4">
-        <h2 className="text-lg font-semibold mb-2">Barras</h2>
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={barData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="value" />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
+            <div className="relative z-10 flex flex-col gap-4 h-full">
+              <div className="flex items-center justify-between">
+                <h2 className="text-xl font-semibold">{setor.nome}</h2>
+                <span className="text-sm opacity-70">
+                  {setor.colaboradores} pessoas
+                </span>
+              </div>
 
-      <div className="h-80 rounded-2xl shadow p-4">
-        <h2 className="text-lg font-semibold mb-2">Pizza</h2>
-        <ResponsiveContainer width="100%" height="100%">
-          <PieChart>
-            <Tooltip />
-            <Legend />
-            <Pie data={pieData} dataKey="value" nameKey="name" outerRadius={90} />
-          </PieChart>
-        </ResponsiveContainer>
-      </div>
+              <p className="text-sm opacity-80">{setor.descricao}</p>
 
-      <div className="h-80 rounded-2xl shadow p-4">
-        <h2 className="text-lg font-semibold mb-2">Área</h2>
-        <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={areaData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Area type="monotone" dataKey="value" strokeWidth={2} fillOpacity={0.3} />
-          </AreaChart>
-        </ResponsiveContainer>
+              <div className="mt-auto text-sm font-medium opacity-90">
+                Ver setor →
+              </div>
+            </div>
+          </Link>
+        ))}
       </div>
     </div>
   );

@@ -20,7 +20,7 @@ export default function Register() {
     const user = await registerUser(nome, email, senha);
 
     if (user.ok) {
-      router.push("/empresa"); // volta pro login depois de registrar
+      router.push("/setores"); // volta pro login depois de registrar
     } else {
       alert("Erro ao criar conta");
     }

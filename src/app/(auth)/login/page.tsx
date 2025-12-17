@@ -18,7 +18,7 @@ export default function Login() {
     const auth = await authUser(email, senha);
 debugger
     if (auth.ok) {
-      router.push("/empresa");
+      router.push("/setores");
     } else {
       alert("Login inválido");
     }
