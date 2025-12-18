@@ -12,6 +12,8 @@ import {
   Settings,
   ChevronRight,
   User,
+  Building,
+  Microchip,
 } from 'lucide-react';
 import clsx from 'clsx';
 
@@ -28,21 +30,8 @@ type MenuItem = {
 };
 
 const MENU: MenuItem[] = [
-  {
-    label: 'Empresa',
-    icon: Building2,
-    children: [
-      { label: 'Visão geral', href: '/empresa' },
-      { label: 'Setores', href: '/setores' },
-    ],
-  },
-  {
-    label: 'Tecnologia',
-    icon: Users,
-    children: [
-      { label: 'GitHub', href: '/setores/tecnologia/desenvolvimento/github' }
-    ],
-  },
+  { label: 'Empresa', icon: Building, href: '/setores' },
+  { label: 'Tecnologia', icon: Microchip, href: '/setores/tecnologia' },
   { label: 'Acesso', icon: User, href: '/acesso' },
   { label: 'Configurações', icon: Settings, href: '/config' },
 ];
