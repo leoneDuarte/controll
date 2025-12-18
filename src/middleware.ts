@@ -1,25 +1,33 @@
+// middleware.ts
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import jwt from 'jsonwebtoken';
+import { jwtVerify } from 'jose';
 
-const JWT_SECRET = process.env.JWT_SECRET!;
+const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
-export function middleware(req: NextRequest) {
+export async function middleware(req: NextRequest) {
   const token = req.cookies.get('auth_token')?.value;
 
-  // Bloqueia se não estiver autenticado
   if (!token) {
-    return NextResponse.redirect(new URL('/login', req.url));
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
   try {
-    jwt.verify(token, JWT_SECRET);
-    return NextResponse.next();
-  } catch {
-    return NextResponse.redirect(new URL('/login', req.url));
+    const { payload } = await jwtVerify(token, secret);
+
+    const headers = new Headers(req.headers);
+    headers.set('x-user-id', String(payload.id));
+    headers.set('x-user-email', String(payload.email));
+
+    return NextResponse.next({
+      request: { headers },
+    });
+  } catch (err: any) {
+    console.error('JWT ERROR:', err.message);
+    return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
   }
 }
 
 export const config = {
-  matcher: ['/dashboard/:path*', '/api/private/:path*'],
+  matcher: ['/api/user/:path*'],
 };

@@ -42,3 +42,23 @@ export async function POST(req: Request) {
     );
   }
 }
+
+
+export async function GET(req: Request) {
+  try {
+    await connectDB();
+    const userId = req.headers.get('x-user-id');
+    const email = req.headers.get('x-user-email');
+    const data = await User.find({});
+
+    return NextResponse.json(
+      { message: 'Usuários buscados com sucesso', data },
+      { status: 200 }
+    );
+  } catch (e: any) {
+    return NextResponse.json(
+      { error: 'Erro ao criar usuário', details: e.message },
+      { status: 500 }
+    );
+  }
+}

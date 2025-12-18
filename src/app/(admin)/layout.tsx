@@ -11,6 +11,7 @@ import {
   BarChart3,
   Settings,
   ChevronRight,
+  User,
 } from 'lucide-react';
 import clsx from 'clsx';
 
@@ -27,7 +28,6 @@ type MenuItem = {
 };
 
 const MENU: MenuItem[] = [
-  { label: 'Dashboard', icon: Home, href: '/dashboard' },
   {
     label: 'Empresa',
     icon: Building2,
@@ -43,7 +43,7 @@ const MENU: MenuItem[] = [
       { label: 'GitHub', href: '/setores/tecnologia/desenvolvimento/github' }
     ],
   },
-  { label: 'Relatórios', icon: BarChart3, href: '/relatorios' },
+  { label: 'Acesso', icon: User, href: '/acesso' },
   { label: 'Configurações', icon: Settings, href: '/config' },
 ];
 

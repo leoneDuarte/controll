@@ -1,178 +1,117 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
+import Link from 'next/link';
 import {
-  Tabs,
-  TabsList,
-  TabsTrigger,
-  TabsContent,
-} from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+  Users,
+  UserCog,
+  ShieldCheck,
+  KeyRound,
+  Layers,
+} from 'lucide-react';
 
-export interface Setor {
+type ModuloAcesso = {
   id: string;
   nome: string;
-}
+  descricao: string;
+  rota: string;
+  icon: React.ElementType;
+  gradient: string;
+};
 
-export interface Funcionario {
-  id: string;
-  nome: string;
-  cargo: string;
-}
+const modulosAcessoMock: ModuloAcesso[] = [
+  {
+    id: 'usuarios',
+    nome: 'Usuários',
+    descricao: 'Gerencie contas, status e dados de acesso',
+    rota: '/acesso/usuarios',
+    icon: Users,
+    gradient: 'from-indigo-500 to-purple-600',
+  },
+  {
+    id: 'grupos',
+    nome: 'Grupos',
+    descricao: 'Organização de usuários por função',
+    rota: '/acessos/grupos',
+    icon: Layers,
+    gradient: 'from-cyan-500 to-blue-600',
+  },
+  {
+    id: 'permissoes',
+    nome: 'Permissões',
+    descricao: 'Controle fino de acessos e ações',
+    rota: '/acessos/permissoes',
+    icon: KeyRound,
+    gradient: 'from-emerald-500 to-green-600',
+  },
+  {
+    id: 'roles',
+    nome: 'Papéis (Roles)',
+    descricao: 'Perfis de acesso reutilizáveis',
+    rota: '/acessos/roles',
+    icon: ShieldCheck,
+    gradient: 'from-amber-500 to-orange-600',
+  },
+  {
+    id: 'auditoria',
+    nome: 'Auditoria',
+    descricao: 'Histórico e rastreabilidade de acessos',
+    rota: '/acessos/auditoria',
+    icon: UserCog,
+    gradient: 'from-rose-500 to-red-600',
+  },
+];
 
-export interface Empresa {
-  id: string;
-  nome: string;
-  cnpj: string;
-  descricao?: string;
-  setores: Setor[];
-  funcionarios: Funcionario[];
-}
-
-export default function EmpresaPanel({ empresa }: { empresa?: Empresa }) {
-  // GARANTE QUE SEMPRE TEM UM OBJETO VÁLIDO
-  const safeEmpresa: Empresa = empresa || {
-    id: "",
-    nome: "",
-    cnpj: "",
-    descricao: "",
-    setores: [],
-    funcionarios: [],
-  };
-
-  const [dados, setDados] = useState({
-    nome: safeEmpresa.nome,
-    cnpj: safeEmpresa.cnpj,
-    descricao: safeEmpresa.descricao || "",
-  });
-
-  // SE EMPRESA CHEGAR DEPOIS, SINCRONIZA
-  useEffect(() => {
-    if (empresa) {
-      setDados({
-        nome: empresa.nome,
-        cnpj: empresa.cnpj,
-        descricao: empresa.descricao || "",
-      });
-    }
-  }, [empresa]);
-
-  // ENQUANTO NÃO CHEGA EMPRESA REAL, RENDER SEGURO
-  if (!empresa) {
-    return (
-      <Card className="w-full p-6">
-        <p className="text-center text-muted-foreground text-sm">
-          Carregando dados da empresa...
-        </p>
-      </Card>
-    );
-  }
-
+export default function ModulosAcessoCards() {
   return (
-    <Card className="w-full">
-      <CardHeader>
-        <CardTitle>{dados.nome || "Empresa"}</CardTitle>
-      </CardHeader>
+    <div className="p-8">
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold tracking-tight">
+          Controle de Acessos
+        </h1>
+        <p className="text-zinc-400">
+          Gerenciamento de usuários, permissões e segurança
+        </p>
+      </div>
 
-      <CardContent>
-        <Tabs defaultValue="dados" className="w-full">
-          <TabsList>
-            <TabsTrigger value="dados">Dados básicos</TabsTrigger>
-            <TabsTrigger value="setores">Setores</TabsTrigger>
-            <TabsTrigger value="funcionarios">Funcionários</TabsTrigger>
-          </TabsList>
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+        {modulosAcessoMock.map(modulo => {
+          const Icon = modulo.icon;
 
-          {/* -------- DADOS -------- */}
-          <TabsContent value="dados" className="mt-4 space-y-4">
-            <div className="space-y-2">
-              <label>Nome</label>
-              <Input
-                value={dados.nome}
-                onChange={(e) =>
-                  setDados((d) => ({ ...d, nome: e.target.value }))
-                }
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label>CNPJ</label>
-              <Input
-                value={dados.cnpj}
-                onChange={(e) =>
-                  setDados((d) => ({ ...d, cnpj: e.target.value }))
-                }
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label>Descrição</label>
-              <Input
-                value={dados.descricao}
-                onChange={(e) =>
-                  setDados((d) => ({ ...d, descricao: e.target.value }))
-                }
-              />
-            </div>
-
-            <Button>Salvar</Button>
-          </TabsContent>
-
-          {/* -------- SETORES -------- */}
-          <TabsContent value="setores" className="mt-4">
-            {safeEmpresa.setores.length === 0 && (
-              <p className="text-sm text-muted-foreground">
-                Nenhum setor cadastrado.
-              </p>
-            )}
-
-            <div className="space-y-2">
-              {safeEmpresa.setores.map((s) => (
+          return (
+            <Link key={modulo.id} href={modulo.rota}>
+              <div className="group relative overflow-hidden rounded-2xl bg-zinc-900 p-6 text-white shadow-lg transition hover:-translate-y-1 hover:shadow-2xl cursor-pointer">
                 <div
-                  key={s.id}
-                  className="flex items-center justify-between border p-3 rounded-lg"
-                >
-                  <span>{s.nome}</span>
-                  <Badge variant="secondary">{s.id}</Badge>
-                </div>
-              ))}
-            </div>
+                  className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition bg-gradient-to-br ${modulo.gradient}`}
+                />
 
-            <Button className="mt-4">Adicionar setor</Button>
-          </TabsContent>
+                <div className="relative z-10 flex flex-col gap-4 h-full">
+                  <div className="flex items-center justify-between">
+                    <div className="h-12 w-12 rounded-xl bg-white/10 flex items-center justify-center">
+                      <Icon size={22} />
+                    </div>
+                    <span className="text-xs uppercase tracking-wider opacity-60">
+                      {modulo.id}
+                    </span>
+                  </div>
 
-          {/* -------- FUNCIONÁRIOS -------- */}
-          <TabsContent value="funcionarios" className="mt-4">
-            {safeEmpresa.funcionarios.length === 0 && (
-              <p className="text-sm text-muted-foreground">
-                Nenhum funcionário cadastrado.
-              </p>
-            )}
-
-            <div className="space-y-2">
-              {safeEmpresa.funcionarios.map((f) => (
-                <div
-                  key={f.id}
-                  className="flex items-center justify-between border p-3 rounded-lg"
-                >
                   <div>
-                    <p className="font-medium">{f.nome}</p>
-                    <p className="text-sm text-muted-foreground">
-                      {f.cargo}
+                    <h2 className="text-xl font-semibold">
+                      {modulo.nome}
+                    </h2>
+                    <p className="text-sm opacity-80 mt-1">
+                      {modulo.descricao}
                     </p>
                   </div>
 
-                  <Badge>{f.id}</Badge>
+                  <div className="mt-auto text-sm font-medium opacity-90">
+                    Gerenciar módulo →
+                  </div>
                 </div>
-              ))}
-            </div>
-
-            <Button className="mt-4">Adicionar funcionário</Button>
-          </TabsContent>
-        </Tabs>
-      </CardContent>
-    </Card>
+              </div>
+            </Link>
+          );
+        })}
+      </div>
+    </div>
   );
 }
