@@ -33,15 +33,14 @@ const MENU: MenuItem[] = [
     icon: Building2,
     children: [
       { label: 'Visão geral', href: '/empresa' },
-      { label: 'Setores', href: '/empresa/setores' },
+      { label: 'Setores', href: '/setores' },
     ],
   },
   {
     label: 'Tecnologia',
     icon: Users,
     children: [
-      { label: 'GitHub', href: '/integracoes/github' },
-      { label: 'Produtividade', href: '/github/produtividade' },
+      { label: 'GitHub', href: '/setores/tecnologia/desenvolvimento/github' }
     ],
   },
   { label: 'Relatórios', icon: BarChart3, href: '/relatorios' },
