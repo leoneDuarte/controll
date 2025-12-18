@@ -1,13 +1,13 @@
 import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongo';
 import User from '@/models/User';
+import Cliente from '@/models/Cliente';
 
 export async function POST(req: Request) {
   try {
     await connectDB();
 
     const body = await req.json();
-
     const { name, email, password } = body;
 
     if (!name || !email || !password) {
@@ -17,23 +17,31 @@ export async function POST(req: Request) {
       );
     }
 
-    const exists = await User.findOne({ email });
-    if (exists) {
+    let userData = await User.findOne({ email });
+    let clienteData = await Cliente.findOne({ email });
+
+    if (userData || userData) {
       return NextResponse.json(
         { error: 'Email já cadastrado.' },
         { status: 409 }
       );
     }
 
-    const user = await User.create({
-      name,
-      email,
-      password,
+    clienteData = await Cliente.create({
+      nome: name,
+      email: email
+    });
+
+    userData = await User.create({
+      nome: name,
+      email: email,
+      cliente: clienteData._id,
+      senha: password
     });
 
     return NextResponse.json(
-      { message: 'Usuário criado com sucesso', user },
-      { status: 201 }
+      { message: 'Usuário criado com sucesso', userData },
+      { status: 200 }
     );
   } catch (e: any) {
     return NextResponse.json(

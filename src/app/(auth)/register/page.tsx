@@ -16,13 +16,11 @@ export default function Register() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-
-    const user = await registerUser(nome, email, senha);
-
-    if (user.ok) {
-      router.push("/setores"); // volta pro login depois de registrar
+    let register = await registerUser(nome, email, senha);
+    if (register.ok) {
+      router.push("/setores");
     } else {
-      alert("Erro ao criar conta");
+      alert(register.data.error);
     }
   }
 
@@ -90,59 +88,26 @@ export default function Register() {
   );
 }
 
-async function createUser() {
-  const res = await fetch('/api/user', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      name: 'Leone',
-      email: 'falarcomleone@gmail.com',
-      password: 'Leone'
-    })
-  });
-
-  const data = await res.json();
-  return data;
-}
-
-// Mock simples — troque pela sua API real depois
-async function fakeRegister(nome: string, email: string, senha: string) {
-  await new Promise((r) => setTimeout(r, 500));
-
-  if (nome && email && senha) {
-    return { ok: true };
-  }
-
-  return { ok: true };
-}
 
 export async function registerUser(name: string, email: string, password: string): Promise<any> {
-  try {
-    const response = await fetch("/api/user", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name, email, password }),
-    });
-
-    const data = await response.json();
-debugger
+  const response = await fetch("/api/user", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ name, email, password }),
+  });
+  const data = await response.json();
+  console.log(data)
+  if (response.ok) {
     return {
       ok: true,
-      user: {
-        id: data.user.id,
-        nome: data.user.nome,
-        email: data.user.email,
-      },
-      token: data.token,
-    };
-  } catch (error) {
+      data: data
+    }
+  } else {
     return {
       ok: false,
-      message: "Erro ao conectar com o servidor",
-    };
+      data: data
+    }
   }
 }
