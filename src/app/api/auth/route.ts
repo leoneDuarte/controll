@@ -29,7 +29,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const passwordMatch = await bcrypt.compare(password, user.password);
+    const passwordMatch = await bcrypt.compare(password, user.senha);
 
     if (!passwordMatch && false) {
       return NextResponse.json(
