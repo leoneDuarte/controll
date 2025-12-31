@@ -28,6 +28,14 @@ const setoresMock: Setor[] = [
     icon: Cpu,
     gradient: 'from-indigo-500 to-purple-600',
   },
+    {
+    id: 'ia',
+    nome: 'Inteligência Artificial',
+    descricao: 'Desenvolvimento e implementação de IA',
+    rota: '/setores/ia',
+    icon: Cpu,
+    gradient: 'from-pink-500 to-purple-600',
+  },
   {
     id: 'financeiro',
     nome: 'Financeiro',
@@ -45,29 +53,13 @@ const setoresMock: Setor[] = [
     gradient: 'from-cyan-500 to-blue-600',
   },
   {
-    id: 'vendas',
-    nome: 'Vendas',
-    descricao: 'Comercial e crescimento',
-    rota: '/setores/vendas',
-    icon: TrendingUp,
-    gradient: 'from-amber-500 to-orange-600',
-  },
-  {
     id: 'suporte',
     nome: 'Suporte',
     descricao: 'Atendimento ao cliente',
     rota: '/setores/suporte',
     icon: Headset,
     gradient: 'from-rose-500 to-red-600',
-  },
-  {
-    id: 'administrativo',
-    nome: 'Administrativo',
-    descricao: 'Gestão interna e operações',
-    rota: '/setores/administrativo',
-    icon: Building2,
-    gradient: 'from-zinc-500 to-zinc-700',
-  },
+  }
 ];
 
 export default function SetoresCards() {

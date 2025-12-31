@@ -3,6 +3,7 @@ import { connectDB } from '@/lib/mongo';
 import User from '@/models/User';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import { redirect } from 'next/dist/server/api-utils';
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
 
@@ -50,7 +51,7 @@ export async function POST(req: Request) {
     );
 
     const response = NextResponse.json(
-      { message: 'Autenticado com sucesso', user: user },
+      { message: 'Autenticado com sucesso', user: user, redirect: '/setores' },
       { status: 200 }
     );
 

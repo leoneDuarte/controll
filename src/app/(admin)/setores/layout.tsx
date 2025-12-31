@@ -21,6 +21,11 @@ const atalhosMock = [
         icon: Home,
     },
     {
+        href: '/projetos',
+        label: 'Projetos',
+        icon: Settings,
+    },
+    {
         href: '/setores',
         label: 'Setores',
         icon: Users,

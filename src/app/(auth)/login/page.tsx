@@ -14,11 +14,9 @@ export default function Login() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-
     const auth = await authUser(email, senha);
-debugger
     if (auth.ok) {
-      router.push("/setores");
+      router.push(auth.redirect);
     } else {
       alert("Login inválido");
     }
@@ -110,6 +108,7 @@ type AuthResponse =
         nome: string;
         email: string;
       };
+      redirect: string;
       token: string;
     }
   | {
@@ -138,6 +137,7 @@ export async function authUser(email: string, password: string): Promise<AuthRes
         nome: data.user.nome,
         email: data.user.email,
       },
+      redirect: data.redirect,
       token: data.token,
     };
   } catch (error) {
