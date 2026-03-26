@@ -19,6 +19,32 @@ const cache: MongooseCache = global.__mongoose_cache__ ?? {
 
 global.__mongoose_cache__ = cache;
 
+function normalizeMongoUri(mongoUri: string) {
+  const dbName = (
+    process.env.MONGO_DB_NAME ??
+    process.env.MONGO_DB ??
+    ''
+  ).trim();
+  if (!dbName) return mongoUri;
+
+  const schemeIndex = mongoUri.indexOf('://');
+  if (schemeIndex === -1) return mongoUri;
+
+  const pathStart = mongoUri.indexOf('/', schemeIndex + 3);
+  if (pathStart === -1) return `${mongoUri}/${encodeURIComponent(dbName)}`;
+
+  const afterSlash = mongoUri.slice(pathStart + 1);
+  if (afterSlash === '' || afterSlash.startsWith('?')) {
+    return (
+      mongoUri.slice(0, pathStart + 1) +
+      encodeURIComponent(dbName) +
+      (afterSlash ? afterSlash : '')
+    );
+  }
+
+  return mongoUri;
+}
+
 export async function connectMongo() {
   const mongoUri = process.env.MONGO_URI;
   if (!mongoUri) throw new Error('Missing MONGO_URI');
@@ -26,7 +52,9 @@ export async function connectMongo() {
   if (cache.conn) return cache.conn;
 
   if (!cache.promise) {
-    cache.promise = mongoose.connect(mongoUri).then((m) => m);
+    cache.promise = mongoose
+      .connect(normalizeMongoUri(mongoUri))
+      .then((m) => m);
   }
 
   cache.conn = await cache.promise;
