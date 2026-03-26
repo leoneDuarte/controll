@@ -1,25 +1,12 @@
-"use client";
+import { auth } from '@clerk/nextjs/server';
+import { redirect } from 'next/navigation';
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+export default async function Page() {
+  const { userId } = await auth();
 
-// coloque aqui sua lógica real de login
-function isLoggedIn() {
-  return typeof window !== "undefined" && localStorage.getItem("token");
-}
-
-export default function Home() {
-  const router = useRouter();
-
-  useEffect(() => {
-    const logged = isLoggedIn();
-
-    if (!logged) {
-      router.replace("/login");
-    } else {
-      router.replace("/dashboard"); // rota caso esteja logado
-    }
-  }, [router]);
-
-  return null; // NENHUM HTML
+  if (!userId) {
+    return redirect('/auth/sign-in');
+  } else {
+    redirect('/dashboard/overview');
+  }
 }
