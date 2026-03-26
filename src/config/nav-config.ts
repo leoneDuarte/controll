@@ -114,6 +114,32 @@ export const navGroups: NavGroup[] = [
     ]
   },
   {
+    label: 'Controll',
+    items: [
+      {
+        title: 'Home',
+        url: '/dashboard/controll',
+        icon: 'settings',
+        isActive: false,
+        items: []
+      },
+      {
+        title: 'Users',
+        url: '/dashboard/controll/users',
+        icon: 'teams',
+        isActive: false,
+        items: []
+      },
+      {
+        title: 'GitHub (DB)',
+        url: '/dashboard/controll/github',
+        icon: 'github',
+        isActive: false,
+        items: []
+      }
+    ]
+  },
+  {
     label: 'Elements',
     items: [
       {
