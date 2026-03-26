@@ -1,12 +1,8 @@
-import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
+import { requireControllAuth } from '@/features/controll/server/auth-next';
 
 export default async function Dashboard() {
-  const { userId } = await auth();
-
-  if (!userId) {
-    return redirect('/auth/sign-in');
-  } else {
-    redirect('/dashboard/overview');
-  }
+  const claims = await requireControllAuth();
+  if (!claims) return redirect('/controll/login');
+  redirect('/dashboard/controll');
 }
